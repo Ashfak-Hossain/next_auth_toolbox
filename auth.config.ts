@@ -24,11 +24,20 @@ export default {
           const { email, password } = validatedFields.data;
 
           const user = await getUserByEmail(email);
-          if (!user || !user.password) return null;
+
+          // If user does not exist, return error
+          if (!user || !user.password) {
+            throw new Error('User not found');
+          }
 
           const passwordMatch = await bcrypt.compare(password, user.password);
 
-          if (passwordMatch) return user;
+          if (passwordMatch) {
+            return user;
+          } else {
+            // If user exists but password is incorrect, return error
+            throw new Error('Invalid password');
+          }
         }
         return null;
       },
