@@ -3,6 +3,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { SessionProvider } from 'next-auth/react';
+import { Toaster } from 'sonner';
 
 import { auth } from '@/auth';
 
@@ -22,7 +23,10 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <html lang="en">
-        <body className={font.className}>{children}</body>
+        <body className={font.className}>
+          <Toaster position="top-center" />
+          {children}
+        </body>
       </html>
     </SessionProvider>
   );
